@@ -1,1 +1,23 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+     font-family: 'LIBRE';
+     src: url('./assets/fonts/Libre_Franklin/LibreFranklin-VariableFont_wght.ttf');
+}
+
+@font-face {
+     font-family: 'LIBRE';
+     font-style: italic;
+     src: url('./assets/fonts/Libre_Franklin/LibreFranklin-Italic-VariableFont_wght.ttf');
+}
+@font-face {
+     font-family: 'QUICKSAND';
+     src: url('./assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf');
+}
+@layer base {
+     // html {
+     //      font-family: 'LIBRE', sans;
+     // }
+}

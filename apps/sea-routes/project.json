@@ -8,19 +8,30 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/sea-routes",
         "index": "apps/sea-routes/src/index.html",
         "browser": "apps/sea-routes/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/sea-routes/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/sea-routes/src/favicon.ico",
-          "apps/sea-routes/src/assets"
+          "apps/sea-routes/src/assets",
+          {
+            "input": "libs/sea-routes-app/route-map-data-access/src/assets",
+            "glob": "**/*",
+            "output": "assets/sea-routes/"
+          }
         ],
-        "styles": ["apps/sea-routes/src/styles.scss"],
+        "styles": [
+          "apps/sea-routes/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -67,11 +78,15 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/sea-routes/jest.config.ts"
       }
