@@ -11,8 +11,8 @@ export class RoutesParserService {
           return routeInfo
                .split('\n')
                .slice(1, -1)
-               .map((routeRaw) => {
-                    let routeAttributes: string[] = routeRaw.split('","');
+               .map((routeRow) => {
+                    let routeAttributes: string[] = routeRow.split('","');
                     routeAttributes = routeAttributes.map((attr) => attr?.replaceAll('"', ''));
                     const route: Route = {
                          route_id: routeAttributes[0],
@@ -26,12 +26,24 @@ export class RoutesParserService {
                                    lat: Number(pointsAttributes[1]),
                                    lng: Number(pointsAttributes[0]),
                                    leg_duration: Number(pointsAttributes[2]),
-                                   speed: Number(pointsAttributes[3]),
+                                   speed: Number.isNaN(Number(pointsAttributes[3])) ? 0 : Number(pointsAttributes[3]),
                               };
                          }),
                     };
 
                     return route;
                });
+     }
+
+     convertToMap(routes: Route[]): Map<string, Route[]> {
+          return new Map(
+               routes.map((i) => [
+                    i.route_id,
+                    i.points.map((point, index, arr) => ({
+                         ...i,
+                         points: [point, index < arr.length - 1 ? arr[index + 1] : point],
+                    })),
+               ]),
+          );
      }
 }

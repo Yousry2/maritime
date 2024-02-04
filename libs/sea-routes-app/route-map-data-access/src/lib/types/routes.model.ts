@@ -4,6 +4,7 @@ export enum RouteColor {
      YELLOW = '#d7f03a',
      BLUE = '#3a4ff0',
      GREEN = '#057517',
+     ORANE = '#fc7e30',
 }
 export type PolylineOptions = {
      route_id: string;

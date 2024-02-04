@@ -1,22 +1,24 @@
-import { ChangeDetectionStrategy, Component, Inject, Signal, computed, signal } from '@angular/core';
 import { APP_BASE_HREF, CommonModule, NgOptimizedImage, PlatformLocation } from '@angular/common';
-import { RoutesMapComponent } from '../routes-map/routes-map.component';
-import {
-     PolylineOptions,
-     Route,
-     RoutesApiService,
-     RoutesParserService,
-     RouteColor,
-} from '@maritime/route-map-data-access';
+import { ChangeDetectionStrategy, Component, Inject, computed, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Observable, map } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { RouteChartComponent } from '../route-chart/route-chart.component';
+import { Route, RoutesApiService, RoutesParserService } from '@maritime/route-map-data-access';
 import { getBaseHref } from '@maritime/util-common';
+import { Observable, map } from 'rxjs';
+import { RouteChartComponent } from '../route-chart/route-chart.component';
+import { RouteSummaryComponent } from '../route-summary/route-summary.component';
+import { RoutesMapComponent } from '../routes-map/routes-map.component';
 @Component({
      selector: 'maritime-dashboard',
      standalone: true,
-     imports: [CommonModule, RoutesMapComponent, RouteChartComponent, FormsModule, NgOptimizedImage],
+     imports: [
+          CommonModule,
+          RoutesMapComponent,
+          RouteChartComponent,
+          RouteSummaryComponent,
+          FormsModule,
+          NgOptimizedImage,
+     ],
      providers: [
           {
                provide: APP_BASE_HREF,
@@ -34,65 +36,25 @@ export class DashboardComponent {
           private routesParserService: RoutesParserService,
           @Inject(APP_BASE_HREF) public baseHref: string,
      ) {}
-     selectedRoute = signal('');
-     routes$: Observable<Route[]> = this.routesApiService
+
+     selectedRouteId = signal('');
+
+     routesArr$: Observable<Route[]> = this.routesApiService
           .requestRoutesInfo()
           .pipe(map((routeInfo) => this.routesParserService.parseRouteInfo(routeInfo)));
 
-     polylineOptions$: Observable<Map<string, Route[]>> = this.routes$.pipe(
-          map(
-               (routes) =>
-                    new Map(
-                         routes.map((i) => [
-                              i.route_id,
-                              i.points.map((point, index, arr) => ({
-                                   ...i,
-                                   points: [point, index < arr.length - 1 ? arr[index + 1] : point],
-                              })),
-                         ]),
-                    ),
-          ),
+     routes$: Observable<Map<string, Route[]>> = this.routesArr$.pipe(
+          map((routes) => this.routesParserService.convertToMap(routes)),
      );
 
-     polylineOptions2$: Observable<Map<string, PolylineOptions[]>> = this.polylineOptions$.pipe(
-          map((routes) => {
-               const polylineOptions: Map<string, PolylineOptions[]> = new Map();
-               routes.forEach((subRoutes, key) => {
-                    polylineOptions.set(
-                         key,
-                         subRoutes.map((path) => ({
-                              ...path,
+     routes = toSignal(this.routes$, { initialValue: new Map() });
 
-                              path: [
-                                   new google.maps.LatLng(path.points[0]?.lat, path.points[0]?.lng),
-                                   new google.maps.LatLng(path.points[1]?.lat, path.points[1]?.lng),
-                              ],
-                              speed: path.points[0].speed,
-                              leg_duration: path.points[0].leg_duration,
-                              strokeColor:
-                                   path.points[0].speed > 15
-                                        ? RouteColor.GREEN
-                                        : path.points[0].speed > 10
-                                          ? RouteColor.BLUE
-                                          : path.points[0].speed > 6
-                                            ? RouteColor.YELLOW
-                                            : RouteColor.RED,
-                              strokeOpacity: 0.5,
-                              strokeWeight: 5,
-                         })),
-                    );
-               });
-
-               return polylineOptions;
-          }),
-     );
-
-     selectedPolylineOptions = computed<PolylineOptions[]>(() => {
-          return this.polylineOptions()?.get(this.selectedRoute()) ?? [];
+     selectedRoute = computed(() => {
+          return this.routes()?.get(this.selectedRouteId()) ?? [];
      });
 
-     routesList = computed(() => {
-          return [...this.polylineOptions().values()].map((element) => {
+     routesNamesList = computed(() => {
+          return [...this.routes().values()].map((element) => {
                return {
                     route_id: element[0]?.route_id,
                     from_port: element[0]?.from_port,
@@ -101,11 +63,7 @@ export class DashboardComponent {
           });
      });
 
-     polylineOptions: Signal<Map<string, PolylineOptions[]>> = toSignal(this.polylineOptions2$, {
-          initialValue: new Map(),
-     });
-
      changeRoute(routeId: string) {
-          this.selectedRoute.set(routeId);
+          this.selectedRouteId.set(routeId);
      }
 }

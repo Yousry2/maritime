@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, WritableSignal, computed, input, signal } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { PolylineOptions } from '@maritime/route-map-data-access';
+import { Route } from '@maritime/route-map-data-access';
 
 @Component({
      selector: 'maritime-route-chart',
@@ -12,7 +12,7 @@ import { PolylineOptions } from '@maritime/route-map-data-access';
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RouteChartComponent {
-     selectedPolylineOptions = input<PolylineOptions[]>([]);
+     route = input<Route[]>([]);
      chart: WritableSignal<any> = signal('MyChart', {});
 
      chartOptions = computed(() => {
@@ -33,10 +33,10 @@ export class RouteChartComponent {
                          xValueFormatString: 'YYYY',
                          yValueFormatString: "#,###.##'%'",
 
-                         dataPoints: this.selectedPolylineOptions().map((polylineOptions) => {
+                         dataPoints: this.route().map((path) => {
                               return {
-                                   x: new Date(polylineOptions.leg_duration),
-                                   y: polylineOptions.speed,
+                                   x: new Date(path.points[0].leg_duration),
+                                   y: path.points[0].speed,
                               };
                          }),
                     },

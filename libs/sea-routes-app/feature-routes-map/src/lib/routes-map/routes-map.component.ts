@@ -5,13 +5,14 @@ import {
      Component,
      Injector,
      ViewChild,
+     computed,
      effect,
      inject,
      input,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
-import { PolylineOptions, RoutesApiService, RoutesParserService } from '@maritime/route-map-data-access';
+import { Route, RouteColor } from '@maritime/route-map-data-access';
 
 @Component({
      selector: 'maritime-routes-map',
@@ -22,27 +23,23 @@ import { PolylineOptions, RoutesApiService, RoutesParserService } from '@maritim
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoutesMapComponent implements AfterViewInit {
+     // input fields
+     routes = input<Route[]>([]);
+
      @ViewChild('routeMap', { static: false }) googleMap?: GoogleMap;
      injector = inject(Injector);
-     constructor(
-          private routeApiServie: RoutesApiService,
-          private routesParserService: RoutesParserService,
-     ) {}
-
      mapOptions: google.maps.MapOptions = {
           zoom: 11,
           streetViewControl: false,
           center: { lat: 25.2048, lng: 55.2708 },
      };
 
-     selectedPolylineOptions = input<PolylineOptions[]>([]);
-
      ngAfterViewInit(): void {
           effect(
                () => {
-                    if (this.selectedPolylineOptions() && this.selectedPolylineOptions().length > 0) {
+                    if (this.polylineOptions() && this.polylineOptions().length > 0) {
                          const bounds = new google.maps.LatLngBounds();
-                         this.selectedPolylineOptions().forEach((polyline) => {
+                         this.polylineOptions().forEach((polyline) => {
                               bounds.extend(polyline.path[0]);
                               bounds.extend(polyline.path[1]);
                          });
@@ -53,33 +50,28 @@ export class RoutesMapComponent implements AfterViewInit {
           );
      }
 
-     // polylineOptions2$: Observable<PolylineOptions[]> = this.polylineOptions$.pipe(
-     //      map((routes) =>
-     //           routes.map((route) => ({
-     //                ...route,
-     //                path: [
-     //                     new google.maps.LatLng(route.points[0]?.lat, route.points[0]?.lng),
-     //                     new google.maps.LatLng(route.points[1]?.lat, route.points[1]?.lng),
-     //                ],
-     //                strokeColor:
-     //                     route.points[0].speed > 15
-     //                          ? RouteColor.GREEN
-     //                          : route.points[0].speed > 10
-     //                            ? RouteColor.BLUE
-     //                            : route.points[0].speed > 6
-     //                              ? RouteColor.YELLOW
-     //                              : RouteColor.RED,
-     //                strokeOpacity: 0.5,
-     //                strokeWeight: 5,
-     //           })),
-     //      ),
-     // );
+     polylineOptions = computed(() => {
+          return this.routes().map((path) => ({
+               ...path,
 
-     // polylineOptions: Signal<PolylineOptions[]> = toSignal(this.polylineOptions2$, {
-     //      initialValue: [],
-     // });
-
-     // selectedPolylineOptions = computed<PolylineOptions[]>(() => {
-     //      return this.polylineOptions()?.filter((route) => route.route_id === this.selectedRoute()) ?? [];
-     // });
+               path: [
+                    new google.maps.LatLng(path.points[0]?.lat, path.points[0]?.lng),
+                    new google.maps.LatLng(path.points[1]?.lat, path.points[1]?.lng),
+               ],
+               speed: path.points[0].speed,
+               leg_duration: path.points[0].leg_duration,
+               strokeColor:
+                    path.points[0].speed > 20
+                         ? RouteColor.GREEN
+                         : path.points[0].speed > 15
+                           ? RouteColor.BLUE
+                           : path.points[0].speed > 10
+                             ? RouteColor.YELLOW
+                             : path.points[0].speed > 6
+                               ? RouteColor.ORANE
+                               : RouteColor.RED,
+               strokeOpacity: 0.7,
+               strokeWeight: 5,
+          }));
+     });
 }

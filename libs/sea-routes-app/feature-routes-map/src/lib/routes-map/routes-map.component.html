@@ -1,10 +1,11 @@
-<google-map height="500px"
-            #routeMap
-            [options]="mapOptions"
-            width="900px">
-    <ng-container *ngIf="selectedPolylineOptions()">
-        @for (polylineOption of selectedPolylineOptions(); track $index) {
-        <map-polyline [options]="polylineOption">
-        </map-polyline>}
-    </ng-container>
+<google-map
+     height="500px"
+     #routeMap
+     [options]="mapOptions"
+     width="900px">
+     <ng-container *ngIf="polylineOptions()">
+          @for (polylineOption of polylineOptions(); track $index) {
+               <map-polyline [options]="polylineOption"> </map-polyline>
+          }
+     </ng-container>
 </google-map>

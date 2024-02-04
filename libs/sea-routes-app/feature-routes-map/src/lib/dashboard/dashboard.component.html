@@ -1,56 +1,60 @@
-<div class="flex min-h-screen justify-center items-center bg-gray-50">
-        <main class="flex-col  font-quicksand ">
-
-                <div class="flex justify-center items-stretch">
-                        <section
-                                 class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 m-5 rounded-2xl flex-">
-                                <div class="rounded-2xl">
-                                        <div class="flex justify-around items-center">
-                                                <div>Select your route :</div>
-                                                <div class="dropdown">
-                                                        <div tabindex="0"
-                                                             role="button"
-                                                             class="btn m-1">Select your route</div>
-                                                        <ul tabindex="0"
-                                                            #dropdown
-                                                            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-
-                                                                <div class="overflow-y-auto max-h-48">
-                                                                        @for (route of routesList(); track $index) {
-                                                                        <li><a (click)="changeRoute(route.route_id);dropdown.blur()">{{route.from_port}}
-                                                                                        --
-                                                                                        {{route.to_port}}</a></li>
-                                                                        }
-                                                                </div>
-
-                                                        </ul>
-                                                </div>
+<div class="flex min-h-screen justify-center items-center">
+     <main class="flex-col font-libre">
+          <div class="flex justify-center items-stretch">
+               <section class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 m-5 rounded-2xl">
+                    <div class="rounded-2xl flex-col flex-1">
+                         <img alt="logo"
+                              class="self-end w-32"
+                              ngSrc="{{ baseHref }}assets/sea-routes/images/dadesk_logo_blue.svg"
+                              height="20"
+                              priority
+                              width="20" />
+                         <div class="flex-col flex justify-between flex-1">
+                              <div class="flex justify-around items-center m-7">
+                                   <div>Select your route :</div>
+                                   <div class="dropdown">
+                                        <div tabindex="0"
+                                             role="button"
+                                             class="btn m-1">
+                                             Select your route
                                         </div>
+                                        <ul tabindex="0"
+                                            #dropdown
+                                            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                                             <div class="overflow-y-auto max-h-48">
+                                                  @for (route of routesNamesList(); track $index) {
+                                                  <li>
+                                                       <a (click)="changeRoute(route.route_id); dropdown.blur()">{{
+                                                            route.from_port }}
+                                                            --
+                                                            {{ route.to_port }}</a>
+                                                  </li>
+                                                  }
+                                             </div>
+                                        </ul>
+                                   </div>
+                              </div>
+                              @if (selectedRoute() && selectedRoute().length > 0) {
+                              <maritime-route-summary [route]="selectedRoute()"></maritime-route-summary>
+                              }
+                         </div>
+                    </div>
+               </section>
 
-
-
-
-                                </div>
-                        </section>
-
-
-                        <section class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 rounded-2xl m-5 ">
-                                <div class=" rounded-2xl">
-
-                                        <maritime-routes-map
-                                                             [selectedPolylineOptions]="selectedPolylineOptions()"></maritime-routes-map>
-                                </div>
-                        </section>
-                </div>
-                @if (selectedPolylineOptions() && selectedPolylineOptions().length>0) {
-                <div class="flex justify-center items-center">
-                        <section class="backdrop-blur-md p-3 shadow-lg  shadow-gray-400 rounded-2xl flex-1 m-5 ">
-                                <div class=" rounded-2xl">
-                                        <maritime-route-chart
-                                                              [selectedPolylineOptions]="selectedPolylineOptions()"></maritime-route-chart>
-                                </div>
-                        </section>
-                </div>
-                }
-        </main>
+               <section class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 rounded-2xl m-5">
+                    <div class="rounded-2xl">
+                         <maritime-routes-map [routes]="selectedRoute()"></maritime-routes-map>
+                    </div>
+               </section>
+          </div>
+          @if (selectedRoute() && selectedRoute().length > 0) {
+          <div class="flex justify-center items-center">
+               <section class="backdrop-blur-md p-3 shadow-lg shadow-gray-400 rounded-2xl flex-1 m-5">
+                    <div class="rounded-2xl">
+                         <maritime-route-chart [route]="selectedRoute()"></maritime-route-chart>
+                    </div>
+               </section>
+          </div>
+          }
+     </main>
 </div>
