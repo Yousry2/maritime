@@ -8,6 +8,11 @@ import { Observable, map } from 'rxjs';
 import { RouteChartComponent } from '../route-chart/route-chart.component';
 import { RouteSummaryComponent } from '../route-summary/route-summary.component';
 import { RoutesMapComponent } from '../routes-map/routes-map.component';
+
+
+
+
+
 @Component({
      selector: 'maritime-dashboard',
      standalone: true,
@@ -39,20 +44,26 @@ export class DashboardComponent {
 
      selectedRouteId = signal('');
 
+     /**
+      * @description List of routes after parsing the route info
+      */
      routesArr$: Observable<Route[]> = this.routesApiService
           .requestRoutesInfo()
           .pipe(map((routeInfo) => this.routesParserService.parseRouteInfo(routeInfo)));
 
-     routes$: Observable<Map<string, Route[]>> = this.routesArr$.pipe(
-          map((routes) => this.routesParserService.convertToMap(routes)),
-     );
 
-     routes = toSignal(this.routes$, { initialValue: new Map() });
 
+        
+     routes = toSignal(this.routesArr$.pipe(map((routes) => this.routesParserService.convertToMap(routes))), {
+          initialValue: new Map(),
+     });
+
+  
      selectedRoute = computed(() => {
           return this.routes()?.get(this.selectedRouteId()) ?? [];
      });
 
+    
      routesNamesList = computed(() => {
           return [...this.routes().values()].map((element) => {
                return {

@@ -1,7 +1,8 @@
-<div class="flex min-h-screen justify-center items-center">
+<div class="flex min-h-screen justify-center items-center ">
      <main class="flex-col font-libre">
           <div class="flex justify-center items-stretch">
-               <section class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 m-5 rounded-2xl">
+               <section
+                        class="flex backdrop-contrast-200 p-3 shadow-xl max-w-6xl bg-gray-300 shadow-gray-400 m-5 rounded-2xl">
                     <div class="rounded-2xl flex-col flex-1">
                          <img alt="logo"
                               class="self-end w-32"
@@ -41,15 +42,16 @@
                     </div>
                </section>
 
-               <section class="flex backdrop-blur-md p-3 shadow-lg max-w-6xl shadow-gray-400 rounded-2xl m-5">
+               <section
+                        class="flex backdrop-blur-md p-3 shadow-xl bg-gray-300 max-w-6xl shadow-gray-base rounded-2xl m-5">
                     <div class="rounded-2xl">
                          <maritime-routes-map [routes]="selectedRoute()"></maritime-routes-map>
                     </div>
                </section>
           </div>
-          @if (selectedRoute() && selectedRoute().length > 0) {
+          @if (selectedRoute() && selectedRoute().length > 0 && false) {
           <div class="flex justify-center items-center">
-               <section class="backdrop-blur-md p-3 shadow-lg shadow-gray-400 rounded-2xl flex-1 m-5">
+               <section class="backdrop-blur-md p-3 shadow-xl bg-gray-300 shadow-gray-400 rounded-2xl flex-1 m-5">
                     <div class="rounded-2xl">
                          <maritime-route-chart [route]="selectedRoute()"></maritime-route-chart>
                     </div>

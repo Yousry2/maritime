@@ -3,6 +3,23 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output, computed, inp
 import { Route } from '@maritime/route-map-data-access';
 import { convertTimeDifferenceToDate } from '@maritime/util-common';
 
+/**
+ * Represents a component that displays a summary of a route.
+ *
+ * @remarks
+ * This component is used to display information about a route, including the average speed, travel time, and route name.
+ *
+ * @property {Input} route - An array of route objects to be displayed.
+ * @property {Computed} averageSpeed - A computed property that calculates the average speed of the route.
+ * @property {Computed} travelTime - A computed property that calculates the total travel time of the route.
+ * @property {Computed} routeName - A computed property that generates the route name.
+ *
+ * @example
+ * ```html
+ * <maritime-route-summary [route]="selectedRoute()"></maritime-route-summary>
+ * ```
+ *
+ */
 @Component({
      selector: 'maritime-route-summary',
      standalone: true,

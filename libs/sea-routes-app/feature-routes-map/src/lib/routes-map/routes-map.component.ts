@@ -14,6 +14,22 @@ import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
 import { Route, RouteColor } from '@maritime/route-map-data-access';
 
+/**
+ * Represents a component that displays a map of maritime routes.
+ *
+ * @remarks
+ * This component is used to display maritime routes on a map using the Google Maps API.
+ *
+ * @example
+ * ```html
+ * <maritime-routes-map [routes]="routes"></maritime-routes-map>
+ * ```
+ *
+ * @property {Route[]} routes - An input property that accepts an array of Route objects.
+ * @property {Computed} polylineOptions - A computed property that returns the configuration options for the polylines to be drawn on the map.
+ *
+ * @publicApi
+ */
 @Component({
      selector: 'maritime-routes-map',
      standalone: true,

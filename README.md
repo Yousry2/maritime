@@ -23,6 +23,8 @@
 
 5- Implement the new Signal Store
 
+6- Generate JsDocs
+
 <br>
 
 ## Run Application locally
@@ -98,3 +100,7 @@ npm run test-sea-routes
 5- jest
 
 6- playwright
+
+7- canvasjs/angular-charts 1.0
+
+8- angular/google-maps: 17.1
