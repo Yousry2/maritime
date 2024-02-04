@@ -1,6 +1,6 @@
 # Maritime / Sea Routes
 
-<a alt="DA-DESK logo" href="https://yousry2.github.io/maritime" target="_blank" rel="noreferrer"><img src="https://yousry2.github.io/maritime/screenshot.jpg" width="800"></a>
+<a alt="DA-DESK logo" href="https://yousry2.github.io/maritime" target="_blank" rel="noreferrer"><img src="https://yousry2.github.io/maritime/static/screenshot.jpg" width="800"></a>
 
 ## ✨ ** [Check Live Demo](https://yousry2.github.io/maritime/).✨ **
 
@@ -19,7 +19,9 @@
 
 3- Add responsive design for mobile and tablet screens
 
-4- [[Done]] ~~ Add input signals to main components (Dashboard , routes chart , routes map , Summary)~~
+4- [[Done]] ~~Add input signals to main components (Dashboard , routes chart , routes map , Summary)~~
+
+5- Implement the new Signal Store
 
 <br>
 
@@ -45,7 +47,7 @@ npm run start-sea-routes
 
 ## App Architecture
 
-<img src="https://yousry2.github.io/maritime/graph.jpg" width="800">
+<img src="https://yousry2.github.io/maritime/static/graph.jpg" width="800">
 
 Run the following command in repository root path and then navigate open your browser to http://127.0.0.1:4211/projects/all to check application dependencies and architecture
 
