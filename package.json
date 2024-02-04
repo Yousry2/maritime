@@ -6,7 +6,7 @@
     "start-sea-routes": "nx run sea-routes:serve:development",
     "test-sea-routes": "nx run sea-routes:test",
     "e2e-sea-routes": "nx run sea-routes-e2e:e2e",
-    "build": "nx run sea-routes:build:production "
+    "build": "nx run sea-routes:build:production --base-href='/maritime'"
   },
   "private": true,
   "dependencies": {
