@@ -4,8 +4,9 @@
   "license": "MIT",
   "scripts": {
     "start-sea-routes": "nx run sea-routes:serve:development",
-    "test-sea-routes": "nx run sea-routes-auth:test",
-    "e2e-sea-routes": "nx e2e sea-routes-e2e "
+    "test-sea-routes": "nx run sea-routes:test",
+    "e2e-sea-routes": "nx run sea-routes-e2e:e2e",
+    "build": "nx run sea-routes:build:production --base-href='/maritime/"
   },
   "private": true,
   "dependencies": {

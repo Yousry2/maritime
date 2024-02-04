@@ -19,7 +19,8 @@
                "@maritime/route-map-data-access": ["libs/sea-routes-app/route-map-data-access/src/index.ts"],
                "@maritime/sea-routes-data-access": ["libs/sea-routes-app/src/index.ts"],
                "@maritime/tailwind-presets": ["libs/shared/tailwind-presets/src/index.ts"],
-               "@maritime/util-common": ["libs/shared/util-common/src/index.ts"]
+               "@maritime/util-common": ["libs/shared/util-common/src/index.ts"],
+               "@maritime/util-environments": ["libs/shared/util-environments/src/index.ts"]
           }
      },
      "exclude": ["node_modules", "tmp"]
