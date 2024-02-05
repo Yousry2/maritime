@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Route } from '../types/routes.model';
 
+/**
+ * RoutesParserService is a service class that provides methods for parsing and converting route information.
+ */
 @Injectable({
      providedIn: 'root',
 })
 export class RoutesParserService {
      constructor() {}
 
+     /**
+      * Parses the given route information and returns an array of Route objects.
+      *
+      * @param routeInfo - The route information to be parsed.
+      * @returns An array of Route objects representing the parsed route information.
+      */
      parseRouteInfo(routeInfo: string): Route[] {
           return routeInfo
                .split('\n')
@@ -35,6 +44,12 @@ export class RoutesParserService {
                });
      }
 
+     /**
+      * Converts an array of Route objects into a Map of route IDs to an array of modified Route objects.
+      *
+      * @param routes - An array of Route objects to be converted.
+      * @returns A Map object where each key is a route ID and the corresponding value is an array of modified path objects.
+      */
      convertToMap(routes: Route[]): Map<string, Route[]> {
           return new Map(
                routes.map((i) => [
