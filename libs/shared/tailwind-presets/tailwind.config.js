@@ -1,7 +1,4 @@
 module.exports = {
-     daisyui: {
-          themes: ['cupcake', 'dark', 'cmyk'],
-     },
      theme: {
           extend: {
                fontFamily: {

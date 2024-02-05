@@ -15,7 +15,7 @@
 
 1- E2E tests using playwright using several device sizes
 
-2- Add Unit Testing for parsing functionlities
+2- [[Done]] ~~Add Unit Testing for parsing functionlities~~
 
 3- Add responsive design for mobile and tablet screens
 
@@ -23,7 +23,7 @@
 
 5- Implement the new Signal Store
 
-6- Generate JsDocs
+6- [[Done]] ~~Generate JsDocs~~
 
 <br>
 
@@ -75,7 +75,7 @@ The application consists of the following applications/libraries :
 
 ## Tests
 
-### 1- E2E Testing (Playwright) :
+### 1- [To Be deployed soon] E2E Testing (Playwright) :
 
 Check the latest e2e report on this link https://yousry2.github.io/maritime/playwright-report.html
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { Route } from '@maritime/route-map-data-access';
 import { convertTimeDifferenceToDate } from '@maritime/util-common';
 
@@ -31,7 +31,6 @@ import { convertTimeDifferenceToDate } from '@maritime/util-common';
 export class RouteSummaryComponent {
      constructor() {}
      route = input<Route[]>([]);
-     @Output() newItemEvent = new EventEmitter();
 
      averageSpeed = computed(() => {
           return (this.route().reduce((acc, cur) => acc + cur.points[0].speed, 0) / this.route().length).toFixed(2);

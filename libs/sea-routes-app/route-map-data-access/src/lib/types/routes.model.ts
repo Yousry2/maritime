@@ -21,7 +21,5 @@ export type Route = {
      route_id: string;
      from_port: string;
      to_port: string;
-     leg_duration: number;
-     speed: number;
      points: Point[];
 };
