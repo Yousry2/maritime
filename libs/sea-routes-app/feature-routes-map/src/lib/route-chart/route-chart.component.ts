@@ -64,7 +64,6 @@ export class RouteChartComponent implements AfterViewInit {
                title: {
                     text: 'Route Speed Chart',
                     fontFamily: '"LIBRE", "sans-serif"',
-                    fontWeight: 'bold',
                },
                axisY: {
                     title: 'Speed in knots',

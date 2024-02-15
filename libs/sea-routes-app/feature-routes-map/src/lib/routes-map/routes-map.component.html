@@ -1,11 +1,16 @@
-<google-map
-     height="500px"
-     #routeMap
-     [options]="mapOptions"
-     width="900px">
-     <ng-container *ngIf="polylineOptions()">
-          @for (polylineOption of polylineOptions(); track $index) {
-               <map-polyline [options]="polylineOption"> </map-polyline>
-          }
-     </ng-container>
-</google-map>
+<div
+     style="display: absolute"
+     class="h-[90dvh] w-[90vw]">
+     <google-map
+          #routeMap
+          height="100%"
+          width="100%"
+          style="height: 100%"
+          [options]="mapOptions">
+          <ng-container *ngIf="polylineOptions()">
+               @for (polylineOption of polylineOptions(); track $index) {
+                    <map-polyline [options]="polylineOption"> </map-polyline>
+               }
+          </ng-container>
+     </google-map>
+</div>
