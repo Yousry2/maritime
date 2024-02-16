@@ -1,13 +1,12 @@
 import { APP_BASE_HREF, CommonModule, NgOptimizedImage, PlatformLocation } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, computed, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, Inject, computed, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Route, RoutesApiService, RoutesParserService } from '@maritime/route-map-data-access';
 import { getBaseHref } from '@maritime/util-common';
-import { Observable, map } from 'rxjs';
 import { RouteChartComponent } from '../route-chart/route-chart.component';
 import { RouteSummaryComponent } from '../route-summary/route-summary.component';
 import { RoutesMapComponent } from '../routes-map/routes-map.component';
+import { RouteStore } from '../sea-routes-store/routes.store/routes.store';
+import { patchState } from '@ngrx/signals';
 
 /**
  * The DashboardComponent class represents the main component of the dashboard module.
@@ -44,25 +43,14 @@ import { RoutesMapComponent } from '../routes-map/routes-map.component';
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-     constructor(
-          private routesApiService: RoutesApiService,
-          private routesParserService: RoutesParserService,
-          @Inject(APP_BASE_HREF) public baseHref: string,
-     ) {}
+     constructor(@Inject(APP_BASE_HREF) public baseHref: string) {}
 
-     selectedRouteId = signal('');
+     routeStore = inject(RouteStore);
+     selectedRouteId = this.routeStore.selectedRouteId;
 
-     routesArr$: Observable<Route[]> = this.routesApiService
-          .requestRoutesInfo()
-          .pipe(map((routeInfo) => this.routesParserService.parseRouteInfo(routeInfo)));
+     routes = this.routeStore.routes;
 
-     routes = toSignal(this.routesArr$.pipe(map((routes) => this.routesParserService.convertToMap(routes))), {
-          initialValue: new Map(),
-     });
-
-     selectedRoute = computed(() => {
-          return this.routes()?.get(this.selectedRouteId()) ?? [];
-     });
+     selectedRoute = this.routeStore.selectedRoute;
 
      /**
       * @property {{string, string, string[]>} routeNamesList - list of route names to be displayed in the dropdown.
@@ -83,6 +71,6 @@ export class DashboardComponent {
       * @description Changes the currently selected route.
       * @param {string} routeId - The ID of the route to select.
       */ changeRoute(routeId: string) {
-          this.selectedRouteId.set(routeId);
+          patchState(this.routeStore, { selectedRouteId: routeId });
      }
 }

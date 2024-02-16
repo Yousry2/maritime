@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouteSummaryComponent } from './route-summary.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RouteSummaryComponent', () => {
      let component: RouteSummaryComponent;
@@ -7,7 +8,7 @@ describe('RouteSummaryComponent', () => {
 
      beforeEach(async () => {
           await TestBed.configureTestingModule({
-               imports: [RouteSummaryComponent],
+               imports: [RouteSummaryComponent, HttpClientTestingModule],
           }).compileComponents();
 
           fixture = TestBed.createComponent(RouteSummaryComponent);
