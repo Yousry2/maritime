@@ -1,16 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-     AfterViewInit,
-     ChangeDetectionStrategy,
-     Component,
-     Injector,
-     computed,
-     effect,
-     inject,
-     input,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Injector, computed, effect, inject } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
-import { Route } from '@maritime/route-map-data-access';
+import { RouteStore } from '../sea-routes-store/routes.store/routes.store';
 
 /**
  * Represents a component that displays a chart of route speeds.
@@ -37,7 +28,9 @@ import { Route } from '@maritime/route-map-data-access';
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RouteChartComponent implements AfterViewInit {
-     route = input<Route[]>([]);
+     routeStore = inject(RouteStore);
+
+     route = this.routeStore.selectedRoute;
      chart: any;
      injector = inject(Injector);
 
