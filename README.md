@@ -21,7 +21,7 @@
 
 4- [[Done]] ~~Add input signals to main components (Dashboard , routes chart , routes map , Summary)~~
 
-5- Implement the new Signal Store
+5- [[Done]] ~~Implement the new Signal Store~~
 
 6- [[Done]] ~~Generate JsDocs~~
 
