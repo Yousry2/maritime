@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { Route } from '@maritime/route-map-data-access';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { convertTimeDifferenceToDate } from '@maritime/util-common';
+import { RouteStore } from '../sea-routes-store/routes.store/routes.store';
 
 /**
  * Represents a component that displays a summary of a route.
@@ -29,8 +29,8 @@ import { convertTimeDifferenceToDate } from '@maritime/util-common';
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RouteSummaryComponent {
-     constructor() {}
-     route = input<Route[]>([]);
+     routeStore = inject(RouteStore);
+     route = this.routeStore.selectedRoute;
 
      averageSpeed = computed(() => {
           return (this.route().reduce((acc, cur) => acc + cur.points[0].speed, 0) / this.route().length).toFixed(2);

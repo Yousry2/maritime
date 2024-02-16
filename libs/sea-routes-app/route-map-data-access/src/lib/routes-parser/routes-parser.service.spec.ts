@@ -51,7 +51,6 @@ describe('RoutesParserService', () => {
                },
           ];
 
-          console.log('parsedRoutes', service.parseRouteInfo(routeInfo));
           const parsedRoutes = service.parseRouteInfo(routeInfo);
 
           expect(parsedRoutes).toEqual(expectedRoutes);
