@@ -8,11 +8,11 @@ import {
      computed,
      effect,
      inject,
-     input,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { GoogleMap, GoogleMapsModule } from '@angular/google-maps';
-import { Route, RouteColor } from '@maritime/route-map-data-access';
+import { RouteColor } from '@maritime/route-map-data-access';
+import { RouteStore } from '../sea-routes-store/routes.store/routes.store';
 
 /**
  * Represents a component that displays a map of maritime routes.
@@ -39,8 +39,8 @@ import { Route, RouteColor } from '@maritime/route-map-data-access';
      changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoutesMapComponent implements AfterViewInit {
-     // input fields
-     routes = input<Route[]>([]);
+     routeStore = inject(RouteStore);
+     routes = this.routeStore.selectedRoute;
 
      @ViewChild('routeMap', { static: false }) googleMap?: GoogleMap;
      injector = inject(Injector);
@@ -67,6 +67,7 @@ export class RoutesMapComponent implements AfterViewInit {
      }
 
      polylineOptions = computed(() => {
+          console.log(this.routes().flat());
           return this.routes().map((path) => ({
                ...path,
 
